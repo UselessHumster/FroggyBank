@@ -28,10 +28,18 @@ export const viewport: Viewport = {
   viewportFit: "cover"
 };
 
+const fontInitScript = `
+try {
+  var font = window.localStorage.getItem("froggybank-font") || "onest";
+  document.documentElement.dataset.font = font;
+} catch {}
+`;
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru" suppressHydrationWarning>
       <body>
+        <script dangerouslySetInnerHTML={{ __html: fontInitScript }} />
         <ThemeProvider>
           <RegisterServiceWorker />
           {children}
