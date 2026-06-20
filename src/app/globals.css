@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 148 38% 98%;
+  --foreground: 220 22% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 22% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 22% 10%;
+  --primary: 158 68% 36%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 43 92% 63%;
+  --secondary-foreground: 220 22% 10%;
+  --muted: 152 18% 91%;
+  --muted-foreground: 220 10% 44%;
+  --accent: 199 82% 55%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 78% 58%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 152 18% 84%;
+  --input: 152 18% 84%;
+  --ring: 158 68% 36%;
+  --radius: 1rem;
+}
+
+.dark {
+  --background: 210 24% 8%;
+  --foreground: 150 28% 96%;
+  --card: 210 22% 12%;
+  --card-foreground: 150 28% 96%;
+  --popover: 210 22% 12%;
+  --popover-foreground: 150 28% 96%;
+  --primary: 154 68% 48%;
+  --primary-foreground: 210 24% 8%;
+  --secondary: 43 88% 58%;
+  --secondary-foreground: 210 24% 8%;
+  --muted: 210 17% 18%;
+  --muted-foreground: 150 12% 72%;
+  --accent: 199 86% 62%;
+  --accent-foreground: 210 24% 8%;
+  --destructive: 0 72% 55%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 210 15% 22%;
+  --input: 210 15% 22%;
+  --ring: 154 68% 48%;
+}
+
+* {
+  @apply border-border;
+}
+
+html {
+  min-height: 100%;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  @apply min-h-screen bg-background text-foreground antialiased;
+  background-image:
+    radial-gradient(circle at 15% 0%, hsl(158 68% 36% / 0.16), transparent 28rem),
+    radial-gradient(circle at 92% 12%, hsl(199 82% 55% / 0.16), transparent 24rem);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.safe-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}

@@ -1,0 +1,18 @@
+{
+  "name": "FroggyBank",
+  "short_name": "FroggyBank",
+  "description": "Учет личных финансов",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#f7fbf8",
+  "theme_color": "#16a064",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
