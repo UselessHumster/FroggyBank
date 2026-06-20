@@ -12,6 +12,8 @@ Static PWA assets are in `public/`, including `manifest.webmanifest`, `sw.js`, a
 - `npm run dev`: run the Next.js dev server.
 - `npm run typecheck`: run TypeScript with `tsc --noEmit`.
 - `npm run lint`: run Next/ESLint checks.
+- `npm run test`: run Vitest unit tests.
+- `npm run test:watch`: run Vitest in watch mode.
 - `npm run build`: create a production Next.js build.
 - `docker compose up -d`: build and run the app plus local Supabase services.
 - `docker compose config`: validate Compose configuration.
@@ -24,16 +26,21 @@ Use 2-space indentation, Tailwind utility classes, and the existing shadcn-style
 
 ## Testing Guidelines
 
-No dedicated test framework is configured yet. Before submitting changes, run:
+Vitest is configured for unit testing. Write test files matching the `*.test.ts` or `*.test.tsx` pattern alongside the code they test.
+
+Before submitting changes, run the validation suite locally:
 
 ```bash
-npm run typecheck
 npm run lint
+npm run typecheck
+npm run test
 npm run build
 docker compose config
 ```
 
 For UI or auth changes, manually verify login, protected-route redirects, category CRUD, transaction CRUD, dashboard totals, history filters, analytics charts, dark mode, and PWA manifest loading.
+
+Every pull request runs automated tests, typecheck, linting, and build in GitHub Actions. Merges to `main` build the Docker image and push it to GHCR.
 
 ## Commit & Pull Request Guidelines
 
