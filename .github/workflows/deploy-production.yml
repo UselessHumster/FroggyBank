@@ -1,0 +1,27 @@
+name: Deploy production
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.PROD_SSH_KEY }}" > ~/.ssh/froggybank_prod
+          chmod 600 ~/.ssh/froggybank_prod
+          ssh-keyscan -H "${{ secrets.PROD_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy
+        run: |
+          ssh -i ~/.ssh/froggybank_prod \
+            "${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}" \
+            'sh /opt/froggybank/scripts/deploy-production.sh'
