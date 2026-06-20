@@ -25,16 +25,8 @@ begin
   if not exists (select 1 from information_schema.schemata where schema_name = 'auth') then
     create schema auth authorization supabase_auth_admin;
   end if;
-  if not exists (
-    select 1
-    from pg_type t
-    join pg_namespace n on n.oid = t.typnamespace
-    where n.nspname = 'auth' and t.typname = 'factor_type'
-  ) then
-    create type auth.factor_type as enum ('totp', 'webauthn');
-  end if;
 end
 \$\$;
 
-alter type auth.factor_type owner to supabase_auth_admin;
+alter role supabase_auth_admin set search_path = auth, public;
 SQL

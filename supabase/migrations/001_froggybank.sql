@@ -55,39 +55,53 @@ create index transactions_category_id_idx on public.transactions(category_id);
 alter table public.categories enable row level security;
 alter table public.transactions enable row level security;
 
+create or replace function public.current_user_id()
+returns uuid
+language sql
+stable
+as $$
+  select nullif(
+    coalesce(
+      nullif(current_setting('request.jwt.claims', true), '')::jsonb ->> 'sub',
+      current_setting('request.jwt.claim.sub', true)
+    ),
+    ''
+  )::uuid;
+$$;
+
 create policy "Users can read own categories"
 on public.categories for select
-using (user_id = nullif(current_setting('request.jwt.claim.sub', true), '')::uuid);
+using (user_id = public.current_user_id());
 
 create policy "Users can insert own categories"
 on public.categories for insert
-with check (user_id = nullif(current_setting('request.jwt.claim.sub', true), '')::uuid);
+with check (user_id = public.current_user_id());
 
 create policy "Users can update own categories"
 on public.categories for update
-using (user_id = nullif(current_setting('request.jwt.claim.sub', true), '')::uuid)
-with check (user_id = nullif(current_setting('request.jwt.claim.sub', true), '')::uuid);
+using (user_id = public.current_user_id())
+with check (user_id = public.current_user_id());
 
 create policy "Users can delete own categories"
 on public.categories for delete
-using (user_id = nullif(current_setting('request.jwt.claim.sub', true), '')::uuid);
+using (user_id = public.current_user_id());
 
 create policy "Users can read own transactions"
 on public.transactions for select
-using (user_id = nullif(current_setting('request.jwt.claim.sub', true), '')::uuid);
+using (user_id = public.current_user_id());
 
 create policy "Users can insert own transactions"
 on public.transactions for insert
-with check (user_id = nullif(current_setting('request.jwt.claim.sub', true), '')::uuid);
+with check (user_id = public.current_user_id());
 
 create policy "Users can update own transactions"
 on public.transactions for update
-using (user_id = nullif(current_setting('request.jwt.claim.sub', true), '')::uuid)
-with check (user_id = nullif(current_setting('request.jwt.claim.sub', true), '')::uuid);
+using (user_id = public.current_user_id())
+with check (user_id = public.current_user_id());
 
 create policy "Users can delete own transactions"
 on public.transactions for delete
-using (user_id = nullif(current_setting('request.jwt.claim.sub', true), '')::uuid);
+using (user_id = public.current_user_id());
 
 create or replace function public.ensure_transaction_category_matches()
 returns trigger
