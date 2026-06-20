@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { signIn } from "@/lib/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -11,8 +12,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
     <main className="grid min-h-screen place-items-center px-4 py-10">
       <Card className="w-full max-w-md overflow-hidden">
         <div className="bg-primary p-7 text-primary-foreground">
-          <div className="mb-10 grid h-14 w-14 place-items-center rounded-2xl bg-white/18 text-2xl">₽</div>
-          <h1 className="text-3xl font-black">FroggyBank</h1>
+          <Image src="/icons/icon-192.png" alt="" width={56} height={56} className="mb-10 h-14 w-14 rounded-2xl object-cover" priority />
+          <h1 className="text-3xl font-black">Жабжет</h1>
           <p className="mt-2 text-sm text-primary-foreground/80">Быстрый учет денег без ощущения таблицы.</p>
         </div>
         <form action={signIn} className="space-y-4 p-6">
