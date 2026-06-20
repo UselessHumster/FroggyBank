@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 import animate from "tailwindcss-animate";
 
 const config: Config = {
-  darkMode: ["class"],
+  darkMode: ["class", ".dark, .moss-dark, .pond-dark, .kingdom-dark"],
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
@@ -38,6 +38,28 @@ const config: Config = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))"
+        },
+        // Custom design tokens mapping
+        brand: {
+          bg: {
+            primary: "hsl(var(--bg-primary))",
+            secondary: "hsl(var(--bg-secondary))"
+          },
+          surface: {
+            DEFAULT: "hsl(var(--surface))",
+            hover: "hsl(var(--surface-hover))"
+          },
+          border: "hsl(var(--border))",
+          text: {
+            primary: "hsl(var(--text-primary))",
+            secondary: "hsl(var(--text-secondary))"
+          },
+          accent: {
+            DEFAULT: "hsl(var(--accent-brand))",
+            hover: "hsl(var(--accent-hover-brand))"
+          },
+          danger: "hsl(var(--danger-brand))",
+          success: "hsl(var(--success-brand))"
         }
       },
       borderRadius: {
@@ -46,7 +68,7 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)"
       },
       boxShadow: {
-        glow: "0 24px 80px rgba(16, 185, 129, 0.18)"
+        glow: "0 24px 80px var(--glow-color)"
       }
     }
   },

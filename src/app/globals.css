@@ -2,49 +2,229 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: 148 38% 98%;
-  --foreground: 220 22% 10%;
-  --card: 0 0% 100%;
-  --card-foreground: 220 22% 10%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 220 22% 10%;
-  --primary: 158 68% 36%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 43 92% 63%;
-  --secondary-foreground: 220 22% 10%;
-  --muted: 152 18% 91%;
-  --muted-foreground: 220 10% 44%;
-  --accent: 199 82% 55%;
-  --accent-foreground: 0 0% 100%;
-  --destructive: 0 78% 58%;
-  --destructive-foreground: 0 0% 100%;
-  --border: 152 18% 84%;
-  --input: 152 18% 84%;
-  --ring: 158 68% 36%;
+:root,
+.moss-light {
+  --background: 149 18% 75%;
+  --foreground: 145 35% 10%;
+  --card: 151 19% 81%;
+  --card-foreground: 145 35% 10%;
+  --popover: 151 19% 81%;
+  --popover-foreground: 145 35% 10%;
+  --primary: 142 43% 22%;
+  --primary-foreground: 150 25% 94%;
+  --secondary: 147 15% 89%;
+  --secondary-foreground: 145 35% 10%;
+  --muted: 151 17% 68%;
+  --muted-foreground: 144 35% 18%;
+  --accent: 151 17% 68%;
+  --accent-foreground: 145 35% 10%;
+  --destructive: 0 46% 40%;
+  --destructive-foreground: 150 25% 94%;
+  --border: 152 17% 61%;
+  --input: 152 17% 61%;
+  --ring: 142 43% 22%;
   --radius: 1rem;
+
+  /* Custom design tokens */
+  --bg-primary: var(--background);
+  --bg-secondary: var(--muted);
+  --surface: var(--card);
+  --surface-hover: 151 17% 68%;
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --accent-brand: var(--primary);
+  --accent-hover-brand: 142 40% 30%;
+  --danger-brand: var(--destructive);
+  --success-brand: 142 43% 22%;
+  --glow-color: rgba(32, 81, 50, 0.15);
+  --gradient-1: 142 43% 22%;
+  --gradient-2: 144 35% 18%;
 }
 
-.dark {
-  --background: 210 24% 8%;
-  --foreground: 150 28% 96%;
-  --card: 210 22% 12%;
-  --card-foreground: 150 28% 96%;
-  --popover: 210 22% 12%;
-  --popover-foreground: 150 28% 96%;
-  --primary: 154 68% 48%;
-  --primary-foreground: 210 24% 8%;
-  --secondary: 43 88% 58%;
-  --secondary-foreground: 210 24% 8%;
-  --muted: 210 17% 18%;
-  --muted-foreground: 150 12% 72%;
-  --accent: 199 86% 62%;
-  --accent-foreground: 210 24% 8%;
-  --destructive: 0 72% 55%;
-  --destructive-foreground: 0 0% 100%;
-  --border: 210 15% 22%;
-  --input: 210 15% 22%;
-  --ring: 154 68% 48%;
+.dark,
+.moss-dark {
+  --background: 160 20% 8%;
+  --foreground: 140 10% 92%;
+  --card: 160 20% 11%;
+  --card-foreground: 140 10% 92%;
+  --popover: 160 20% 11%;
+  --popover-foreground: 140 10% 92%;
+  --primary: 141 28% 49%;
+  --primary-foreground: 160 25% 4%;
+  --secondary: 160 17% 15%;
+  --secondary-foreground: 140 10% 92%;
+  --muted: 161 17% 13%;
+  --muted-foreground: 154 8% 68%;
+  --accent: 160 17% 15%;
+  --accent-foreground: 140 10% 92%;
+  --destructive: 0 40% 54%;
+  --destructive-foreground: 0 40% 98%;
+  --border: 158 19% 17%;
+  --input: 158 19% 17%;
+  --ring: 141 28% 49%;
+
+  /* Custom design tokens */
+  --bg-primary: var(--background);
+  --bg-secondary: var(--muted);
+  --surface: var(--card);
+  --surface-hover: 161 17% 13%;
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --accent-brand: var(--primary);
+  --accent-hover-brand: 136 26% 53%;
+  --danger-brand: var(--destructive);
+  --success-brand: 138 36% 48%;
+  --glow-color: rgba(90, 159, 114, 0.15);
+  --gradient-1: 141 28% 49%;
+  --gradient-2: 160 20% 8%;
+}
+
+.pond-light {
+  --background: 170 20% 71%;
+  --foreground: 165 46% 7%;
+  --card: 167 17% 77%;
+  --card-foreground: 165 46% 7%;
+  --popover: 167 17% 77%;
+  --popover-foreground: 165 46% 7%;
+  --primary: 167 58% 19%;
+  --primary-foreground: 170 20% 94%;
+  --secondary: 164 16% 86%;
+  --secondary-foreground: 165 46% 7%;
+  --muted: 170 19% 64%;
+  --muted-foreground: 170 49% 13%;
+  --accent: 170 19% 64%;
+  --accent-foreground: 165 46% 7%;
+  --destructive: 0 46% 40%;
+  --destructive-foreground: 170 20% 94%;
+  --border: 168 18% 57%;
+  --input: 168 18% 57%;
+  --ring: 167 58% 19%;
+
+  /* Custom design tokens */
+  --bg-primary: var(--background);
+  --bg-secondary: var(--muted);
+  --surface: var(--card);
+  --surface-hover: 170 19% 64%;
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --accent-brand: var(--primary);
+  --accent-hover-brand: 167 50% 25%;
+  --danger-brand: var(--destructive);
+  --success-brand: 167 58% 19%;
+  --glow-color: rgba(20, 76, 63, 0.15);
+  --gradient-1: 167 58% 19%;
+  --gradient-2: 170 49% 13%;
+}
+
+.pond-dark {
+  --background: 180 25% 6%;
+  --foreground: 156 9% 91%;
+  --card: 180 25% 9%;
+  --card-foreground: 156 9% 91%;
+  --popover: 180 25% 9%;
+  --popover-foreground: 156 9% 91%;
+  --primary: 166 38% 45%;
+  --primary-foreground: 180 30% 4%;
+  --secondary: 180 25% 12%;
+  --secondary-foreground: 156 9% 91%;
+  --muted: 180 25% 12%;
+  --muted-foreground: 159 11% 65%;
+  --accent: 180 25% 12%;
+  --accent-foreground: 156 9% 91%;
+  --destructive: 0 42% 57%;
+  --destructive-foreground: 0 42% 98%;
+  --border: 180 24% 16%;
+  --input: 180 24% 16%;
+  --ring: 166 38% 45%;
+
+  /* Custom design tokens */
+  --bg-primary: var(--background);
+  --bg-secondary: var(--muted);
+  --surface: var(--card);
+  --surface-hover: 180 25% 12%;
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --accent-brand: var(--primary);
+  --accent-hover-brand: 166 36% 52%;
+  --danger-brand: var(--destructive);
+  --success-brand: 166 38% 45%;
+  --glow-color: rgba(72, 158, 138, 0.15);
+  --gradient-1: 166 38% 45%;
+  --gradient-2: 180 25% 6%;
+}
+
+.kingdom-light {
+  --background: 60 17% 75%;
+  --foreground: 70 21% 11%;
+  --card: 60 16% 81%;
+  --card-foreground: 70 21% 11%;
+  --popover: 60 16% 81%;
+  --popover-foreground: 70 21% 11%;
+  --primary: 88 32% 24%;
+  --primary-foreground: 60 22% 94%;
+  --secondary: 60 17% 84%;
+  --secondary-foreground: 70 21% 11%;
+  --muted: 60 16% 67%;
+  --muted-foreground: 2c 35 1E;
+  --accent: 60 16% 67%;
+  --accent-foreground: 70 21% 11%;
+  --destructive: 0 46% 40%;
+  --destructive-foreground: 60 22% 94%;
+  --border: 60 14% 59%;
+  --input: 60 14% 59%;
+  --ring: 88 32% 24%;
+
+  /* Custom design tokens */
+  --bg-primary: var(--background);
+  --bg-secondary: var(--muted);
+  --surface: var(--card);
+  --surface-hover: 60 16% 67%;
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --accent-brand: var(--primary);
+  --accent-hover-brand: 88 30% 30%;
+  --danger-brand: var(--destructive);
+  --success-brand: 88 32% 24%;
+  --glow-color: rgba(62, 81, 42, 0.15);
+  --gradient-1: 88 32% 24%;
+  --gradient-2: 2c 35 1E;
+}
+
+.kingdom-dark {
+  --background: 72 20% 7%;
+  --foreground: 84 10% 91%;
+  --card: 72 17% 10%;
+  --card-foreground: 84 10% 91%;
+  --popover: 72 17% 10%;
+  --popover-foreground: 84 10% 91%;
+  --primary: 85 20% 55%;
+  --primary-foreground: 72 25% 4%;
+  --secondary: 74 17% 13%;
+  --secondary-foreground: 84 10% 91%;
+  --muted: 74 17% 13%;
+  --muted-foreground: 72 11% 69%;
+  --accent: 74 17% 13%;
+  --accent-foreground: 84 10% 91%;
+  --destructive: 0 40% 54%;
+  --destructive-foreground: 0 40% 98%;
+  --border: 74 15% 18%;
+  --input: 74 15% 18%;
+  --ring: 85 20% 55%;
+
+  /* Custom design tokens */
+  --bg-primary: var(--background);
+  --bg-secondary: var(--muted);
+  --surface: var(--card);
+  --surface-hover: 74 17% 13%;
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --accent-brand: var(--primary);
+  --accent-hover-brand: 85 23% 62%;
+  --danger-brand: var(--destructive);
+  --success-brand: 85 20% 55%;
+  --glow-color: rgba(143, 163, 116, 0.15);
+  --gradient-1: 85 20% 55%;
+  --gradient-2: 41 46% 57%;
 }
 
 * {
@@ -56,15 +236,18 @@ html {
   color-scheme: light;
 }
 
-html.dark {
+html.dark,
+html.moss-dark,
+html.pond-dark,
+html.kingdom-dark {
   color-scheme: dark;
 }
 
 body {
   @apply min-h-screen bg-background text-foreground antialiased;
   background-image:
-    radial-gradient(circle at 15% 0%, hsl(158 68% 36% / 0.16), transparent 28rem),
-    radial-gradient(circle at 92% 12%, hsl(199 82% 55% / 0.16), transparent 24rem);
+    radial-gradient(circle at 15% 0%, hsl(var(--gradient-1) / 0.14), transparent 28rem),
+    radial-gradient(circle at 92% 12%, hsl(var(--gradient-2) / 0.14), transparent 24rem);
 }
 
 button,
