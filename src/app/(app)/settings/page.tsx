@@ -2,6 +2,7 @@ import { Mail } from "lucide-react";
 import { signOut } from "@/lib/actions/auth";
 import { getCategories, getUserContext } from "@/lib/data/queries";
 import { CategoryManager } from "@/components/app/category-manager";
+import { FontSelector } from "@/components/app/font-selector";
 import { ThemeToggle } from "@/components/app/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -25,13 +26,17 @@ export default async function SettingsPage() {
             <p className="truncate text-sm text-muted-foreground">{user.email}</p>
           </div>
         </div>
-        <div className="flex flex-wrap gap-3">
-          <ThemeToggle />
+        <div>
           <form action={signOut}>
             <Button variant="destructive">Выйти</Button>
           </form>
         </div>
       </Card>
+      <section className="space-y-3">
+        <h2 className="text-xl font-black">Оформление</h2>
+        <ThemeToggle />
+        <FontSelector />
+      </section>
       <section className="space-y-3">
         <h2 className="text-xl font-black">Категории</h2>
         <CategoryManager categories={categories} />
