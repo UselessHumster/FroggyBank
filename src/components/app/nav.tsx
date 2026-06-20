@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { BarChart3, CirclePlus, History, Home, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -20,8 +21,8 @@ export function AppNav() {
     <>
       <aside className="fixed left-0 top-0 hidden h-screen w-72 border-r border-border/70 bg-card/70 p-5 backdrop-blur-xl lg:block">
         <Link href="/dashboard" className="mb-8 flex items-center gap-3 text-xl font-black">
-          <span className="grid h-11 w-11 place-items-center rounded-2xl bg-primary text-xl text-primary-foreground">₽</span>
-          FroggyBank
+          <Image src="/icons/icon-192.png" alt="" width={44} height={44} className="h-11 w-11 rounded-2xl object-cover" priority />
+          Жабжет
         </Link>
         <nav className="space-y-2">
           {items.map((item) => {

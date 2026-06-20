@@ -4,12 +4,19 @@ import { ThemeProvider } from "@/components/app/theme-provider";
 import { RegisterServiceWorker } from "@/app/register-sw";
 
 export const metadata: Metadata = {
-  title: "FroggyBank",
+  title: "Жабжет",
   description: "Личный учет финансов",
   manifest: "/manifest.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }
+    ],
+    apple: "/apple-touch-icon.png"
+  },
   appleWebApp: {
     capable: true,
-    title: "FroggyBank",
+    title: "Жабжет",
     statusBarStyle: "black-translucent"
   }
 };

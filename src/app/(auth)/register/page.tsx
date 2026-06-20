@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { signUp } from "@/lib/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -11,7 +12,7 @@ export default async function RegisterPage({ searchParams }: { searchParams: Pro
     <main className="grid min-h-screen place-items-center px-4 py-10">
       <Card className="w-full max-w-md p-6">
         <div className="mb-7">
-          <div className="mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-primary text-2xl text-primary-foreground">₽</div>
+          <Image src="/icons/icon-192.png" alt="" width={56} height={56} className="mb-5 h-14 w-14 rounded-2xl object-cover" priority />
           <h1 className="text-3xl font-black">Создайте аккаунт</h1>
           <p className="mt-2 text-sm text-muted-foreground">Категории появятся автоматически после регистрации.</p>
         </div>

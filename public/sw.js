@@ -1,7 +1,7 @@
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open("froggybank-shell-v1").then((cache) =>
-      cache.addAll(["/", "/dashboard", "/manifest.webmanifest", "/icons/icon.svg"])
+    caches.open("froggybank-shell-v2").then((cache) =>
+      cache.addAll(["/", "/dashboard", "/manifest.webmanifest", "/icons/icon-192.png", "/icons/icon-512.png"])
     )
   );
   self.skipWaiting();
