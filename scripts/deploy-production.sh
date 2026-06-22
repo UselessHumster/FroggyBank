@@ -26,6 +26,8 @@ psql_db -c "
   );
 "
 
+migrations_applied=0
+
 if [ "$migrations_table_exists" = "f" ]; then
   for migration in supabase/migrations/*.sql; do
     filename=$(basename "$migration")
@@ -45,7 +47,12 @@ for migration in supabase/migrations/*.sql; do
   echo "Applying migration: $filename"
   psql_db -f "/docker-entrypoint-initdb.d/$filename"
   psql_db -c "insert into public.schema_migrations (filename) values ('$filename') on conflict (filename) do nothing;"
+  migrations_applied=1
 done
+
+if [ "$migrations_applied" = "1" ]; then
+  docker compose -f docker-compose.prod.yml restart rest
+fi
 
 docker network connect froggybank_default npm 2>/dev/null || true
 docker image prune -f
