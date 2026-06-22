@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: error.message ?? JSON.stringify(error) }, { status: 500 });
     }
 
-    const response = NextResponse.json({ ok: true });
+    const response = NextResponse.json({ ok: true, credentialId: credential.id });
     response.cookies.delete("fb_webauthn_registration_challenge");
     return response;
   } catch (error) {
