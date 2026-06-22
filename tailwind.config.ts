@@ -69,6 +69,9 @@ const config: Config = {
       },
       boxShadow: {
         glow: "0 24px 80px var(--glow-color)"
+      },
+      opacity: {
+        "12": "0.12"
       }
     }
   },
