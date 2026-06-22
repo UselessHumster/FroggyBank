@@ -16,8 +16,30 @@ export type WebAuthnCredentialRow = {
   last_used_at: string | null;
 };
 
+function firstHeaderValue(value: string | null) {
+  return value?.split(",")[0]?.trim() || null;
+}
+
+function isInternalHost(hostname: string) {
+  return hostname === "0.0.0.0" || hostname === "::" || hostname === "";
+}
+
+function urlFromHost(proto: string, host: string) {
+  return new URL(`${proto}://${host}`);
+}
+
 export function getWebAuthnConfig(request: Request) {
-  const url = new URL(request.url);
+  const requestUrl = new URL(request.url);
+  const forwardedHost = firstHeaderValue(request.headers.get("x-forwarded-host"));
+  const host = forwardedHost ?? firstHeaderValue(request.headers.get("host"));
+  const forwardedProto = firstHeaderValue(request.headers.get("x-forwarded-proto"));
+  const proto = forwardedProto ?? requestUrl.protocol.replace(":", "");
+  const configuredSiteUrl = process.env.SITE_URL ? new URL(process.env.SITE_URL) : null;
+  const headerUrl = host ? urlFromHost(proto, host) : null;
+  const url = headerUrl && !isInternalHost(headerUrl.hostname)
+    ? headerUrl
+    : configuredSiteUrl ?? requestUrl;
+
   const origin = url.origin;
   return {
     origin,
