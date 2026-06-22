@@ -23,6 +23,15 @@ export async function getCategories() {
   return (data ?? []) as Category[];
 }
 
+export async function hasWebAuthnCredentials() {
+  const { supabase, user } = await getUserContext();
+  const { count } = await supabase
+    .from("webauthn_credentials")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id);
+  return Boolean(count);
+}
+
 export async function getTransactions(params?: {
   type?: TransactionType | "all";
   category?: string;

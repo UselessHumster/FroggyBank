@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { BiometricLogin } from "@/components/app/biometric-login";
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const params = await searchParams;
@@ -27,6 +28,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             <Input id="password" name="password" type="password" autoComplete="current-password" required />
           </div>
           <Button className="w-full" size="lg">Войти</Button>
+          <BiometricLogin />
           <p className="text-center text-sm text-muted-foreground">
             Нет аккаунта? <Link href="/register" className="font-semibold text-primary">Зарегистрироваться</Link>
           </p>
