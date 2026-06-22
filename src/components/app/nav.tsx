@@ -53,8 +53,10 @@ export function AppNav() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex min-w-0 flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-semibold text-muted-foreground",
-                active && "bg-primary/12 text-primary"
+                "flex min-w-0 flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-semibold transition-all duration-200",
+                active 
+                  ? "bg-primary/12 text-primary" 
+                  : "text-muted-foreground/60 hover:text-muted-foreground"
               )}
             >
               <Icon className={cn("h-5 w-5", item.href === "/add" && "h-7 w-7", active && item.href === "/add" && "text-primary")} />
