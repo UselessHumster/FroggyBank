@@ -33,8 +33,8 @@ export function getWebAuthnConfig(request: Request) {
   const forwardedHost = firstHeaderValue(request.headers.get("x-forwarded-host"));
   const host = forwardedHost ?? firstHeaderValue(request.headers.get("host"));
   const forwardedProto = firstHeaderValue(request.headers.get("x-forwarded-proto"));
-  const proto = forwardedProto ?? requestUrl.protocol.replace(":", "");
   const configuredSiteUrl = process.env.SITE_URL ? new URL(process.env.SITE_URL) : null;
+  const proto = forwardedProto ?? configuredSiteUrl?.protocol.replace(":", "") ?? requestUrl.protocol.replace(":", "");
   const headerUrl = host ? urlFromHost(proto, host) : null;
   const url = headerUrl && !isInternalHost(headerUrl.hostname)
     ? headerUrl

@@ -35,4 +35,18 @@ describe("getWebAuthnConfig", () => {
       rpID: "budget.example.com"
     });
   });
+
+  it("uses the SITE_URL protocol when a proxy forwards only the public host", () => {
+    process.env.SITE_URL = "https://finance.zhabik.ru";
+    const request = new Request("http://0.0.0.0:3000/api/webauthn/registration/verify", {
+      headers: {
+        host: "finance.zhabik.ru"
+      }
+    });
+
+    expect(getWebAuthnConfig(request)).toEqual({
+      origin: "https://finance.zhabik.ru",
+      rpID: "finance.zhabik.ru"
+    });
+  });
 });
