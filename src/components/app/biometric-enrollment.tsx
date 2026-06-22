@@ -12,6 +12,18 @@ type BiometricEnrollmentProps = {
   compact?: boolean;
 };
 
+async function readResponseError(response: Response) {
+  const text = await response.text();
+  if (!text) return null;
+
+  try {
+    const data = JSON.parse(text) as { error?: string };
+    return data.error ?? text;
+  } catch {
+    return text;
+  }
+}
+
 export function BiometricEnrollment({ enabled, compact = false }: BiometricEnrollmentProps) {
   const router = useRouter();
   const [available, setAvailable] = useState(false);
@@ -45,8 +57,9 @@ export function BiometricEnrollment({ enabled, compact = false }: BiometricEnrol
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(registration)
         });
-        const result = await verifyResponse.json();
-        if (!verifyResponse.ok) throw new Error(result.error ?? "Не удалось включить FaceID.");
+        if (!verifyResponse.ok) {
+          throw new Error(await readResponseError(verifyResponse) ?? "Не удалось включить FaceID.");
+        }
 
         setMessage("FaceID включен для этого устройства.");
         router.refresh();
