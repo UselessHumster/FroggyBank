@@ -2,6 +2,7 @@ import { startOfMonth, subMonths, endOfMonth, subDays, startOfYear, format } fro
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import type { Category, Period, Transaction, TransactionType } from "@/lib/types/database";
+import type { WebAuthnCredentialRow } from "@/lib/webauthn";
 
 export async function getUserContext() {
   const supabase = await createClient();
@@ -23,13 +24,18 @@ export async function getCategories() {
   return (data ?? []) as Category[];
 }
 
-export async function hasWebAuthnCredentials() {
+export async function getWebAuthnCredentials() {
   const { supabase, user } = await getUserContext();
-  const { count } = await supabase
+  const { data } = await supabase
     .from("webauthn_credentials")
-    .select("id", { count: "exact", head: true })
-    .eq("user_id", user.id);
-  return Boolean(count);
+    .select("id, credential_id, device_type, backed_up, created_at, last_used_at")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+
+  return (data ?? []) as Pick<
+    WebAuthnCredentialRow,
+    "id" | "credential_id" | "device_type" | "backed_up" | "created_at" | "last_used_at"
+  >[];
 }
 
 export async function getTransactions(params?: {

@@ -1,6 +1,6 @@
 import { Mail } from "lucide-react";
 import { signOut } from "@/lib/actions/auth";
-import { getCategories, getUserContext, hasWebAuthnCredentials } from "@/lib/data/queries";
+import { getCategories, getUserContext, getWebAuthnCredentials } from "@/lib/data/queries";
 import { BiometricEnrollment } from "@/components/app/biometric-enrollment";
 import { CategoryManager } from "@/components/app/category-manager";
 import { FontSelector } from "@/components/app/font-selector";
@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 export default async function SettingsPage() {
-  const [{ user }, categories, biometricEnabled] = await Promise.all([getUserContext(), getCategories(), hasWebAuthnCredentials()]);
+  const [{ user }, categories, webAuthnCredentials] = await Promise.all([getUserContext(), getCategories(), getWebAuthnCredentials()]);
 
   return (
     <div className="space-y-5">
@@ -40,7 +40,7 @@ export default async function SettingsPage() {
       </section>
       <section className="space-y-3">
         <h2 className="text-xl font-black">FaceID и биометрия</h2>
-        <BiometricEnrollment enabled={biometricEnabled} />
+        <BiometricEnrollment credentials={webAuthnCredentials} />
       </section>
       <section className="space-y-3">
         <h2 className="text-xl font-black">Категории</h2>
