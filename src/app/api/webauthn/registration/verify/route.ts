@@ -1,5 +1,6 @@
 import { verifyRegistrationResponse, type RegistrationResponseJSON } from "@simplewebauthn/server";
 import { NextResponse, type NextRequest } from "next/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { bufferToBase64URL, getWebAuthnConfig } from "@/lib/webauthn";
 
@@ -35,7 +36,8 @@ export async function POST(request: NextRequest) {
     }
 
     const { credential } = verification.registrationInfo;
-    const { error } = await supabase.from("webauthn_credentials").upsert({
+    const admin = createAdminClient();
+    const { error } = await admin.from("webauthn_credentials").upsert({
       user_id: user.id,
       user_email: user.email?.toLowerCase() ?? "",
       credential_id: credential.id,
@@ -44,11 +46,13 @@ export async function POST(request: NextRequest) {
       transports: credential.transports ?? [],
       device_type: verification.registrationInfo.credentialDeviceType,
       backed_up: verification.registrationInfo.credentialBackedUp
+    }, {
+      onConflict: "credential_id"
     });
 
     if (error) {
-      console.error("Failed to store WebAuthn credential", { message: error.message, code: error.code });
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      console.error("Failed to store WebAuthn credential", JSON.stringify(error));
+      return NextResponse.json({ error: error.message ?? JSON.stringify(error) }, { status: 500 });
     }
 
     const response = NextResponse.json({ ok: true });
