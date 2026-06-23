@@ -31,11 +31,18 @@ export async function upsertCategory(formData: FormData) {
   const { supabase, user } = await requireUser();
 
   if (parsed.id) {
-    await supabase
+    const { data: existing } = await supabase
       .from("categories")
-      .update({ name: parsed.name, emoji: parsed.emoji, type: parsed.type })
+      .select("system_key")
       .eq("id", parsed.id)
-      .eq("user_id", user.id);
+      .eq("user_id", user.id)
+      .single();
+
+    const payload = existing?.system_key === "tips"
+      ? { emoji: parsed.emoji }
+      : { name: parsed.name, emoji: parsed.emoji, type: parsed.type };
+
+    await supabase.from("categories").update(payload).eq("id", parsed.id).eq("user_id", user.id);
   } else {
     await supabase.from("categories").insert({ ...parsed, user_id: user.id });
   }
@@ -46,6 +53,6 @@ export async function upsertCategory(formData: FormData) {
 export async function deleteCategory(formData: FormData) {
   const id = z.string().uuid().parse(formData.get("id"));
   const { supabase, user } = await requireUser();
-  await supabase.from("categories").delete().eq("id", id).eq("user_id", user.id);
+  await supabase.from("categories").delete().eq("id", id).eq("user_id", user.id).is("system_key", null);
   revalidatePath("/", "layout");
 }

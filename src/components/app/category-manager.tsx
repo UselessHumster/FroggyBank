@@ -25,33 +25,45 @@ export function CategoryManager({ categories }: { categories: Category[] }) {
 }
 
 function CategoryForm({ category }: { category?: Category }) {
+  const isSystem = Boolean(category?.system_key);
+
   return (
     <form action={upsertCategory} className="grid gap-3 sm:grid-cols-[80px_1fr_150px_auto] sm:items-end">
       {category ? <input type="hidden" name="id" value={category.id} /> : null}
+      {isSystem ? (
+        <>
+          <input type="hidden" name="name" value={category?.name} />
+          <input type="hidden" name="type" value={category?.type} />
+        </>
+      ) : null}
       <div className="space-y-2">
         <Label>Emoji</Label>
         <Input name="emoji" defaultValue={category?.emoji ?? "💸"} required />
       </div>
       <div className="space-y-2">
         <Label>Название</Label>
-        <Input name="name" defaultValue={category?.name ?? ""} placeholder="Категория" required />
+        <Input name="name" defaultValue={category?.name ?? ""} placeholder="Категория" required readOnly={isSystem} disabled={isSystem} />
       </div>
       <div className="space-y-2">
         <Label>Тип</Label>
-        <Select name="type" defaultValue={category?.type ?? "expense"}>
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="expense">Расход</SelectItem>
-            <SelectItem value="income">Доход</SelectItem>
-            <SelectItem value="both">Оба</SelectItem>
-          </SelectContent>
-        </Select>
+        {isSystem ? (
+          <Input value="Расход" disabled readOnly />
+        ) : (
+          <Select name="type" defaultValue={category?.type ?? "expense"}>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="expense">Расход</SelectItem>
+              <SelectItem value="income">Доход</SelectItem>
+              <SelectItem value="both">Оба</SelectItem>
+            </SelectContent>
+          </Select>
+        )}
       </div>
       <div className="flex gap-2">
         <Button type="submit" className="flex-1">{category ? "OK" : "Создать"}</Button>
-        {category ? (
+        {category && !isSystem ? (
           <Button formAction={deleteCategory} variant="outline" name="id" value={category.id} type="submit">
             Удалить
           </Button>

@@ -8,6 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { formatMoney } from "@/lib/utils";
 
+const accountLabels = {
+  card: "Карта",
+  cash: "Наличные"
+};
+
 function groupLabel(date: string) {
   const parsed = parseISO(date);
   if (isToday(parsed)) return "Сегодня";
@@ -36,15 +41,26 @@ export function TransactionList({ transactions }: { transactions: Transaction[] 
             {rows.map((transaction) => (
               <Card key={transaction.id} className="flex items-center gap-3 p-3">
                 <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-muted text-2xl">
-                  {transaction.categories?.emoji ?? "💸"}
+                  {transaction.type === "conversion" ? "↔" : transaction.categories?.emoji ?? "💸"}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-semibold">{transaction.categories?.name ?? "Без категории"}</p>
-                  <p className="truncate text-sm text-muted-foreground">{transaction.note || format(parseISO(transaction.transaction_date), "d MMMM", { locale: ru })}</p>
+                  <p className="truncate font-semibold">
+                    {transaction.type === "conversion"
+                      ? `${accountLabels[transaction.from_account ?? "cash"]} -> ${accountLabels[transaction.to_account ?? "card"]}`
+                      : transaction.categories?.name ?? "Без категории"}
+                  </p>
+                  <p className="truncate text-sm text-muted-foreground">
+                    {transaction.note || (transaction.type === "conversion" ? "Конвертация" : accountLabels[transaction.account]) || format(parseISO(transaction.transaction_date), "d MMMM", { locale: ru })}
+                  </p>
+                  {transaction.tip_transaction ? (
+                    <p className="mt-1 truncate text-sm font-semibold text-destructive">
+                      -{formatMoney(Number(transaction.tip_transaction.amount))} Чаевые · {accountLabels[transaction.tip_transaction.account]}
+                    </p>
+                  ) : null}
                 </div>
                 <div className="text-right">
-                  <p className={transaction.type === "income" ? "font-black text-primary" : "font-black text-destructive"}>
-                    {transaction.type === "income" ? "+" : "-"}{formatMoney(Number(transaction.amount))}
+                  <p className={transaction.type === "income" ? "font-black text-primary" : transaction.type === "expense" ? "font-black text-destructive" : "font-black text-foreground"}>
+                    {transaction.type === "income" ? "+" : transaction.type === "expense" ? "-" : ""}{formatMoney(Number(transaction.amount))}
                   </p>
                   <div className="mt-1 flex justify-end gap-1">
                     <Button asChild variant="ghost" size="icon" className="h-8 w-8">
