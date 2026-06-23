@@ -4,6 +4,7 @@ import { getCategories, getUserContext, getWebAuthnCredentials } from "@/lib/dat
 import { BiometricEnrollment } from "@/components/app/biometric-enrollment";
 import { CategoryManager } from "@/components/app/category-manager";
 import { FontSelector } from "@/components/app/font-selector";
+import { CardStyleSelector } from "@/components/app/card-style-selector";
 import { ThemeToggle } from "@/components/app/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -36,6 +37,7 @@ export default async function SettingsPage() {
       <section className="space-y-3">
         <h2 className="text-xl font-black">Оформление</h2>
         <ThemeToggle />
+        <CardStyleSelector />
         <FontSelector />
       </section>
       <section className="space-y-3">
