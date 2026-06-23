@@ -17,8 +17,8 @@ type Summary = {
 const CARD_STYLES = {
   default: "bg-primary text-primary-foreground",
   "boombox-frogs": "bg-[url('/cards/boombox-frogs.png')] bg-cover bg-center text-white",
-  cyberpunk: "bg-[url('/cards/cyberpunk.png')] bg-cover bg-center text-white",
-  abstract: "bg-[url('/cards/abstract.png')] bg-cover bg-center text-white",
+  "tea-frogs": "bg-[url('/cards/tea-frogs.png')] bg-cover bg-center text-primary-foreground",
+  "frog-tower": "bg-[url('/cards/frog-tower.png')] bg-cover bg-center text-primary-foreground",
 } as const;
 
 export function MainBalanceCard({ allTime }: { allTime: Summary }) {

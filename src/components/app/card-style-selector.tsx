@@ -19,16 +19,16 @@ const CARD_STYLES = [
     previewBg: "bg-[url('/cards/boombox-frogs.png')] bg-cover bg-center"
   },
   {
-    id: "cyberpunk",
-    name: "Неоновый город",
-    description: "Киберпанк атмосфера для ваших финансов",
-    previewBg: "bg-[url('/cards/cyberpunk.png')] bg-cover bg-center"
+    id: "tea-frogs",
+    name: "Чаепитие",
+    description: "Уютные акварельные жабки с грибочками",
+    previewBg: "bg-[url('/cards/tea-frogs.png')] bg-cover bg-center"
   },
   {
-    id: "abstract",
-    name: "Абстракция",
-    description: "Премиальное золото и изумруд в 3D",
-    previewBg: "bg-[url('/cards/abstract.png')] bg-cover bg-center"
+    id: "frog-tower",
+    name: "Жабья пирамида",
+    description: "Много милых жаб на пруду под сакурой",
+    previewBg: "bg-[url('/cards/frog-tower.png')] bg-cover bg-center"
   }
 ];
 
