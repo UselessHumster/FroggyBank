@@ -20,13 +20,13 @@ const CARD_STYLES = [
   },
   {
     id: "tea-frogs",
-    name: "Чаепитие",
+    name: "Кофейная жаба",
     description: "Уютные акварельные жабки с грибочками",
     previewBg: "bg-[url('/cards/tea-frogs.png')] bg-cover bg-center"
   },
   {
     id: "frog-tower",
-    name: "Жабья пирамида",
+    name: "Жабкины",
     description: "Много милых жаб на пруду под сакурой",
     previewBg: "bg-[url('/cards/frog-tower.png')] bg-cover bg-center"
   }
