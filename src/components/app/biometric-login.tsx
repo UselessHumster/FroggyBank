@@ -9,14 +9,10 @@ import { Button } from "@/components/ui/button";
 export function BiometricLogin() {
   const router = useRouter();
   const [available, setAvailable] = useState(false);
-  const [email, setEmail] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    const savedEmail = window.localStorage.getItem("fb_webauthn_email");
-    if (savedEmail) setEmail(savedEmail);
-
     let mounted = true;
     async function checkAvailability() {
       const supportsWebAuthn = browserSupportsWebAuthn();
@@ -29,32 +25,16 @@ export function BiometricLogin() {
     };
   }, []);
 
-  useEffect(() => {
-    function syncEmail(event: Event) {
-      const target = event.target;
-      if (target instanceof HTMLInputElement && target.name === "email") {
-        setEmail(target.value);
-      }
-    }
-
-    document.addEventListener("input", syncEmail);
-    return () => document.removeEventListener("input", syncEmail);
-  }, []);
 
   async function signInWithBiometrics() {
     setMessage(null);
-    const normalizedEmail = email.trim();
-    if (!normalizedEmail) {
-      setMessage("Введите email, чтобы найти FaceID-ключ.");
-      return;
-    }
 
     startTransition(async () => {
       try {
         const optionsResponse = await fetch("/api/webauthn/authentication/options", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: normalizedEmail })
+          body: JSON.stringify({})
         });
         const options = await optionsResponse.json();
         if (!optionsResponse.ok) throw new Error(options.error ?? "FaceID не настроен.");
@@ -68,7 +48,6 @@ export function BiometricLogin() {
         const result = await verifyResponse.json();
         if (!verifyResponse.ok) throw new Error(result.error ?? "Не удалось войти по FaceID.");
 
-        window.localStorage.setItem("fb_webauthn_email", normalizedEmail);
         router.replace("/dashboard");
         router.refresh();
       } catch (error) {
