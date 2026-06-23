@@ -1,6 +1,6 @@
-import type { CategoryType } from "@/lib/types/database";
+import type { CategoryType, SystemCategoryKey } from "@/lib/types/database";
 
-export const defaultCategories: Array<{ name: string; emoji: string; type: CategoryType }> = [
+export const defaultCategories: Array<{ name: string; emoji: string; type: CategoryType; system_key?: SystemCategoryKey }> = [
   { name: "Еда", emoji: "🍔", type: "expense" },
   { name: "Транспорт", emoji: "🚗", type: "expense" },
   { name: "Жилье", emoji: "🏠", type: "expense" },
@@ -9,5 +9,6 @@ export const defaultCategories: Array<{ name: string; emoji: string; type: Categ
   { name: "Покупки", emoji: "🛍️", type: "expense" },
   { name: "Зарплата", emoji: "💼", type: "income" },
   { name: "Инвестиции", emoji: "📈", type: "income" },
-  { name: "Подарки", emoji: "🎁", type: "both" }
+  { name: "Подарки", emoji: "🎁", type: "both" },
+  { name: "Чаевые", emoji: "🤝", type: "expense", system_key: "tips" }
 ];

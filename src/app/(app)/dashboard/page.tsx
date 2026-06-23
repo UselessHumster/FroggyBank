@@ -6,6 +6,14 @@ import { TransactionList } from "@/components/app/transaction-list";
 import { getSummary, getTransactions } from "@/lib/data/queries";
 import { formatMoney } from "@/lib/utils";
 
+type Summary = {
+  income: number;
+  expense: number;
+  balance: number;
+  cardBalance: number;
+  cashBalance: number;
+};
+
 export default async function DashboardPage() {
   const [allTime, currentMonth, previousMonth, recent] = await Promise.all([
     getSummary("all_time"),
@@ -29,6 +37,9 @@ export default async function DashboardPage() {
       <Card className="overflow-hidden border-0 bg-primary p-6 text-primary-foreground shadow-glow">
         <p className="text-sm font-semibold text-primary-foreground/70">Текущий баланс</p>
         <p className="mt-3 break-words text-5xl font-black tracking-normal">{formatMoney(allTime.balance)}</p>
+        <p className="mt-2 text-sm font-semibold text-primary-foreground/75">
+          Карта: {formatMoney(allTime.cardBalance)} · Наличные: {formatMoney(allTime.cashBalance)}
+        </p>
         <div className="mt-6 grid grid-cols-2 gap-3">
           <div className="rounded-2xl bg-white/14 p-4">
             <ArrowUpRight className="mb-2 h-5 w-5" />
@@ -60,7 +71,7 @@ export default async function DashboardPage() {
   );
 }
 
-function SummaryCard({ title, summary }: { title: string; summary: { income: number; expense: number; balance: number } }) {
+function SummaryCard({ title, summary }: { title: string; summary: Summary }) {
   return (
     <Card className="p-5">
       <p className="text-sm font-semibold text-muted-foreground">{title}</p>

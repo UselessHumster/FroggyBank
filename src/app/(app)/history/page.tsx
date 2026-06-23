@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 export default async function HistoryPage({
   searchParams
 }: {
-  searchParams: Promise<{ type?: "income" | "expense" | "all"; category?: string; from?: string; to?: string; q?: string }>;
+  searchParams: Promise<{ type?: "income" | "expense" | "conversion" | "all"; category?: string; from?: string; to?: string; q?: string }>;
 }) {
   const params = await searchParams;
   const [categories, transactions] = await Promise.all([
@@ -32,6 +32,7 @@ export default async function HistoryPage({
               <SelectItem value="all">Все типы</SelectItem>
               <SelectItem value="income">Доходы</SelectItem>
               <SelectItem value="expense">Расходы</SelectItem>
+              <SelectItem value="conversion">Конвертации</SelectItem>
             </SelectContent>
           </Select>
           <Select name="category" defaultValue={params.category ?? "all"}>
