@@ -5,31 +5,40 @@ import { getWebAuthnConfig } from "@/lib/webauthn";
 import type { WebAuthnCredentialRow } from "@/lib/webauthn";
 
 export async function POST(request: Request) {
-  const { email } = (await request.json()) as { email?: string };
-  const normalizedEmail = email?.trim().toLowerCase();
-  if (!normalizedEmail) {
-    return NextResponse.json({ error: "Введите email." }, { status: 400 });
+  let email;
+  try {
+    const body = (await request.json()) as { email?: string };
+    email = body.email;
+  } catch {
+    // Ignore invalid JSON or empty body
   }
 
-  const admin = createAdminClient();
-  const { data: credentials, error } = await admin
-    .from("webauthn_credentials")
-    .select("*")
-    .eq("user_email", normalizedEmail);
+  const normalizedEmail = email?.trim().toLowerCase();
+  let allowCredentials;
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  if (!credentials?.length) {
-    return NextResponse.json({ error: "Для этого email FaceID еще не настроен." }, { status: 404 });
+  if (normalizedEmail) {
+    const admin = createAdminClient();
+    const { data: credentials, error } = await admin
+      .from("webauthn_credentials")
+      .select("*")
+      .eq("user_email", normalizedEmail);
+
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    if (!credentials?.length) {
+      return NextResponse.json({ error: "Для этого email FaceID еще не настроен." }, { status: 404 });
+    }
+    
+    allowCredentials = (credentials as WebAuthnCredentialRow[]).map((credential) => ({
+      id: credential.credential_id,
+      transports: credential.transports ?? undefined
+    }));
   }
 
   const { rpID } = getWebAuthnConfig(request);
   const options = await generateAuthenticationOptions({
     rpID,
     userVerification: "required",
-    allowCredentials: (credentials as WebAuthnCredentialRow[]).map((credential) => ({
-      id: credential.credential_id,
-      transports: credential.transports ?? undefined
-    }))
+    allowCredentials
   });
 
   const response = NextResponse.json(options);
